@@ -1,0 +1,10 @@
+<br><br>
+<div class="content" style="display:block; text-align:center;">
+	<%=image_tag("break_the_bubble.jpg", alt: "Break the Bubble")%><br><br>
+
+        <%= form_tag "index", :class=>"form-search" do %>
+          <%= text_field_tag 'search'%>
+          <%= submit_tag "Search", :class=>"btn btn-primary" %>
+        <% end %>
+
+</div>
