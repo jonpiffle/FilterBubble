@@ -1,0 +1,9 @@
+<div>
+	<h1>Results for: "<%=@query%>"</h1><br>
+
+	<% @results.each do |result| %>
+		<a href="<%=result['link']%>"><%=result['title'] %></a><br>
+		<%=result['snippet']%><br><br>
+		
+	<% end %>
+</div>
