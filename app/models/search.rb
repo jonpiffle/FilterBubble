@@ -13,7 +13,7 @@ class Search
 			:lr => "lang_en"}
 
 		uri.query = URI.encode_www_form(params)
-		sleep 1 until results = open(uri.to_s, :proxy=>"http://109.224.12.234:8080").read rescue nil
+		sleep 1 until results = open(uri.to_s, :proxy=>"http://109.175.6.192:8080").read rescue nil
 		results = JSON::parse(results)
 		return results
 	end
