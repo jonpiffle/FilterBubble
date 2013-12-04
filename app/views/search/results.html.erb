@@ -1,9 +1,62 @@
-<div>
-	<h1>Results for: "<%=@query%>"</h1><br>
+<style type="text/css">
+	.location {
+		height:4px;
+		width:30px;
+		margin-top:1px;
+	}
+	a {
+		text-decoration: underline;
+		font-size: medium;
+		font-family: arial,sans-serif;
+		color: #1e0fbe;
+	}
+	.url {
+		font-size: 14px;
+		color: #006621;
+		font-style: normal;
+		font-family: arial,sans-serif;
+	}
+	.desc {
+		font-size: small;
+		font-family: arial,sans-serif;
+	}
+</style>
 
-	<% @results.each do |result| %>
-		<a href="<%=result['link']%>"><%=result['title'] %></a><br>
-		<%=result['snippet']%><br><br>
-		
-	<% end %>
+ <div class="row-fluid">
+    <div class="span9">
+		<h1>Page <%=@page%> results for: "<%=@query%>"</h1><br>
+		<table>
+			<colgroup>
+	       		<col span="1" style="width: 5%;">
+	       		<col span="1" style="width: 95%;">
+	   		</colgroup>
+			<tbody>
+			<% @results.each do |result| %>
+				<% item = result[:item] %>
+					<tr>
+						<td valign="top" style="margin-right:5px;" align="center">
+								<div class="location"></div>
+							<%result[:locations].each do |loc| %>
+								<div class="location"; style="background-color:<%=@hsla_map[loc]%>"></div>
+							<%end%>
+						</td>
+						<td valign="top">
+							<a href="<%=item['link']%>"><%=item['title'] %></a><br>
+							<span class="url"><%=item['link']%></span><br>
+							<span class="desc"><%=item['snippet']%></span><br><br>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+
+	<div class="span3">
+	 	<div data-spy="affix">
+	    	<h3>Key:</h3>
+	    	<%@locations.each do |loc| %>
+	    		<div style="background-color:<%=@hsla_map[loc]%>; width:200px; text-align:center;"><%=loc%></div>
+	    	<%end%>
+	    </div>
+    </div>
 </div>
