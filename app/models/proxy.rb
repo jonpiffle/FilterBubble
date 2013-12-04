@@ -4,13 +4,11 @@ require 'json'
 require 'timeout'
 
 class Proxy
-	attr_reader :ip, :port, :country, :region, :country_code
-	def initialize(ip, port, country, region, country_code)
+	attr_reader :ip, :port, :country, :country_code
+	def initialize(ip, port)
 		@ip = ip
 		@port = port
-		@country = country
-		@region = region
-		@country_code = country_code
+		get_location_data
 	end
 
 	def destination
@@ -18,7 +16,17 @@ class Proxy
 	end
 
 	def location
-		@region.blank? ? "#{@country}" : "#{@region}, #{@country}"
+		@country
+	end
+
+	def get_location_data
+		ip_geo_info = IPGeoInfo.new(@ip)
+		@country = ip_geo_info.country_name
+		@country_code = ip_geo_info.country_code.downcase
+	end
+
+	def to_s
+		"#{@ip}:#{@port}, #{@country}, #{@country_code}"
 	end
 
 	def search(uri, params)
