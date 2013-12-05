@@ -5,8 +5,8 @@ require 'timeout'
 require_relative '../../app/models/ip_geo_info'
 
 task :test_proxies do
-	filename = 'proxies.txt'
-	file = File.join(Rails.root, 'app', 'models', filename)
+	filename = 'us_working_proxies.txt'
+	file = File.join(Rails.root, filename)
 	@proxies = []
 	threads = []
 	proxies = File.readlines(file)
@@ -17,7 +17,7 @@ task :test_proxies do
 		threads << Thread.new do
 			puts p
 			begin
-				timeout(15) {
+				timeout(10) {
 					sleep 1 until results = open("http://www.yahoo.com", :proxy=>"http://#{p.strip!}").read rescue nil
 					test = true
 					country_code = IPGeoInfo.new(p.split(':')[0]).country_code
@@ -35,5 +35,6 @@ task :test_proxies do
 		end
 	end
 	threads.each { |thread| thread.join }
-	out_file.close
+	non_us_file.close
+	us_file.close
 end

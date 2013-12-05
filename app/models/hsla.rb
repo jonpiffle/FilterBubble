@@ -12,9 +12,10 @@ class HSLA
 				[300, 100, 50, 1]
 			]
 
-	def self.hsla_map(array=[])
+	def self.hsla_map(array)
 		hsla_map = {}
-		array.each_with_index {|el, i| hsla_map[el] = @@hsla[i % @@hsla.length]}
+		array = [] if array.nil?
+		array.each.with_index {|el, i| hsla_map[el] = @@hsla[i % @@hsla.length]}
 		hsla_map.each {|key,array| hsla_map[key] = hsla_to_css(array)}
 		hsla_map
 	end
