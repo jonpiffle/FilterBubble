@@ -1,19 +1,27 @@
 class ProxyCollection
-	@@filename = 'proxies.txt'
+	@@us_filename = 'us_working_proxies.txt'
+	@@non_us_filename = 'non_us_working_proxies.txt'
 
 	def initialize(n)
-		file = File.join(Rails.root, 'app', 'models', @@filename)
+		non_us_file = File.join(Rails.root, @@non_us_filename)
+		us_file = File.join(Rails.root, @@us_filename)
+
 		@proxies = []
-		country_codes = []
-		while @proxies.length < 10
-			proxy = File.readlines(file).sample
+		non_us_file = File.readlines(non_us_file)
+		non_us_file.sample(2*n).each do |proxy|
 			proxy = proxy.strip.split(":")
 			proxy = Proxy.new(proxy[0],proxy[1])
-			if proxy.country_code && !country_codes.include?(proxy.country_code)
-				@proxies.push(proxy)
-				country_codes.push(proxy.country_code)
-			end
+			@proxies.push(proxy)
 		end
+		us_file = File.readlines(us_file)
+		proxy = us_file.sample
+		proxy = proxy.strip.split(":")
+		proxy = Proxy.new(proxy[0],proxy[1])
+		@proxies.push(proxy)
+
+		@proxies.keep_if {|p| !p.country_code.blank?}
+		@proxies.uniq! {|p| p.country_code}
+		@proxies = @proxies.take(n)
 		puts @proxies.map(&:to_s)
 	end	
 

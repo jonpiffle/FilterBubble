@@ -1,6 +1,7 @@
 require 'net/http'
 require "open-uri"
 require 'json'
+require 'timeout'
 
 class Search
 	@@SAMPLE_NUM = 10

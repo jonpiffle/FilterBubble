@@ -1,7 +1,3 @@
-require 'rubygems'
-require 'json'
-require 'net/http'
-
 class IPGeoInfo
   attr_accessor :country_code, :country_name
   def initialize ( ip_address )
