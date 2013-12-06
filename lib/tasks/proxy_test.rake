@@ -5,7 +5,7 @@ require 'timeout'
 require_relative '../../app/models/ip_geo_info'
 
 task :test_proxies do
-	filename = 'us_working_proxies.txt'
+	filename = 'unique_proxies.txt'
 	file = File.join(Rails.root, filename)
 	@proxies = []
 	threads = []
