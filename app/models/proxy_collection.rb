@@ -92,7 +92,7 @@ class Proxy
 		puts "#{location} started"
 		params[:gl] = @country_code
 		uri.query = URI.encode_www_form(params)
-		timeout(10) { 
+		timeout(15) { 
 			sleep 1 until results = open(uri.to_s, :proxy=>destination).read rescue nil
 			results = JSON::parse(results)
 			puts "#{location} finished"
